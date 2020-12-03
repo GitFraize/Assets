@@ -23,8 +23,7 @@ public class Pattern : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < 8; i +=2)
-            pattern[3,i]=101;
+        pattern[3,5]=102;
 
         spawnPattern();
         scanPattern();
@@ -46,6 +45,15 @@ public class Pattern : MonoBehaviour
                         if(j!=7)
                             patternMoves[i + 1, j + 1] = true;
                         break;
+                    /*case 102:
+                        int n = i;
+                        int m = j;
+                        while (pattern[n + 1, m] == 0)
+                        {
+                            patternMoves[n + 1, m] = true;
+                            n++;
+                        }
+                        break;*/
                 }
             }
         }

@@ -10,6 +10,8 @@ public class King : MonoBehaviour
     public void moveKing(int x,int y) {
         int x1 = patternPosX + x;
         int y1 = patternPosY - y;
+        if(!(x<0 && x1<0) && !(x>0 && x1>7))
+
         if (!nowPattern.patternMoves[y1, x1])
         {
             if (nowPattern.pattern[y1, x1] != 0)
