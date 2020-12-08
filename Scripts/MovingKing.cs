@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class MovingKing : MonoBehaviour
 {
-    public float swipeLong = 0;
-    public float startPosX = 0;
-    public float startPosY = 0;
-    public bool isSwipe = false;
-    public float cosinus;
+    public float lenghtX = 0;
+    public float lenghtY = 0;
+    public float alfa;
     King king;
+    public Text lx;
+    public Text ly;
+    public Text la;
 
     private void Start()
     {
@@ -16,53 +18,45 @@ public class MovingKing : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse0))
+        /*if (Input.GetKey(KeyCode.Mouse0))
         {
-            if (isSwipe)
-            {
-                if (Mathf.Abs(swipeLong) > 400)
-                {
-                    doSwipe(startPosX, startPosY, Input.mousePosition.x, Input.mousePosition.y);
-                }
-                else
-                {
-                    swipeLong = Mathf.Sqrt(Mathf.Pow(Input.mousePosition.x-startPosX,2)+ Mathf.Pow(Input.mousePosition.y - startPosY,2));
-                }
-            }
-            else
-            {
-                startPosX = Input.mousePosition.x;
-                startPosY = Input.mousePosition.y;
-                isSwipe = true;
-            }
+            lenghtX += Input.GetAxis("Mouse X");
+            lenghtY += Input.GetAxis("Mouse Y");
         }
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
-            doSwipe(startPosX, startPosY, Input.mousePosition.x, Input.mousePosition.y);
-            isSwipe = false;
-            swipeLong = 0;
-            startPosX = 0;
-            startPosY = 0;
+            doSwipe(lenghtX, lenghtY);
+            lenghtX = 0;
+            lenghtY = 0;
         }
+        lx.text = "" + lenghtX;
+        ly.text = "" + lenghtY;
+        la.text = "" + alfa;
+        */
     }
 
-    void doSwipe(float x1, float y1, float x2, float y2)
+    /*void doSwipe(float x,float y)
     {
-        float x, y;
-        x = x2 - x1;
-        y = y2 - y1;
-        cosinus = x / (Mathf.Sqrt(y * y + x * x));
-
-
-    }
-
-    float side(float num)
-    {
-        num = Mathf.Abs(num);
-        float[] n = new float[8];
-        for(int i = 0; i < 8; i ++)
+        float beta=999;
+        alfa = 57.3f * Mathf.Acos(x / (Mathf.Sqrt(x * x + y * y)));
+        if (y < 0)
+            alfa = 180-alfa+180;
+        int i = 0;
+        while (beta == 999)
         {
-            n[i]=
+            
         }
-    }
+        switch (beta)
+        {
+            case 0: king.moveKing(1, 0); break;
+            case 45: king.moveKing(1, 1); break;
+            case 90: king.moveKing(0, 1); break;
+            case 135: king.moveKing(-1, 1); break;
+            case 180: king.moveKing(-1, 0); break;
+            case 225: king.moveKing(-1, -1); break;
+            case 270: king.moveKing(0, -1); break;
+            case 315: king.moveKing(1, -1); break;
+            case 360: king.moveKing(1, 0); break;
+        }
+    }*/
 }
