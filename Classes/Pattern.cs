@@ -11,10 +11,7 @@ public class Pattern : MonoBehaviour
      * ID 104 : Bishop
      * ID 105 : Queen
      */
-    public int patternNum
-    {
-        get;set;
-    }
+    public int patternNum;
     public int[,] pattern = new int[16,8];
     public bool[,] patternMoves = new bool[16, 8];
     public GameObject[,] pieces = new GameObject[16, 8];
@@ -34,33 +31,6 @@ public class Pattern : MonoBehaviour
     }
     public void scanPattern()
     {
-        for (int i = 0; i < 16; i++)
-            for (int j = 0; j < 8; j++)
-                patternMoves[i, j] = false;
-        for (int i = 0; i< 16; i++)
-        {
-            for(int j=0; j < 8; j++)
-            {
-                switch (pattern[i, j])
-                {
-                    case 101:
-                        if(j!=0)
-                            patternMoves[i + 1, j - 1] = true;
-                        if(j!=7)
-                            patternMoves[i + 1, j + 1] = true;
-                        break;
-                    /*case 102:
-                        int n = i;
-                        int m = j;
-                        while (pattern[n + 1, m] == 0)
-                        {
-                            patternMoves[n + 1, m] = true;
-                            n++;
-                        }
-                        break;*/
-                }
-            }
-        }
     }
 
     public void spawnPattern()
@@ -74,11 +44,7 @@ public class Pattern : MonoBehaviour
                 if (isWhite)
                     id = 1;
                 fields[i, j] = Instantiate(prefabs.getPrefabByID(id));
-                fields[i, j].transform.SetParent(gameObject.transform, true);
-                fields[i, j].transform.localPosition = new Vector3(-4 + 1.3f * j, -0.65f, 1.3f * i);
-                fields[i, j].GetComponent<Field>().x = j;
-                fields[i, j].GetComponent<Field>().y = i;
-                fields[i, j].GetComponent<Field>().king = king;
+                fields[i, j].GetComponent<Field>().spawnField(j,i,king,gameObject);
                 isWhite = !isWhite;
                 if (pattern[i, j] != 0)
                 {

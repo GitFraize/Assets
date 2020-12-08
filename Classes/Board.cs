@@ -3,7 +3,7 @@
 public class Board : MonoBehaviour
 {
     public int nowPatternNum = 0;
-    int patternNum = 0;
+    public int patternNum = 0;
     public GameObject[] patterns = new GameObject[8];
 
     public King king;
@@ -24,7 +24,9 @@ public class Board : MonoBehaviour
         patterns[patternNum].GetComponent<Pattern>().patterns = gameObject.GetComponent<Patterns>();
         patterns[patternNum].GetComponent<Pattern>().prefabs = gameObject.GetComponent<Prefabs>();
         patterns[patternNum].GetComponent<Pattern>().king = king;
-        if (patternNum < 7)
+        patterns[patternNum].GetComponent<Pattern>().patternNum = nowPatternNum;
+
+        if (patternNum != 7)
             patternNum++;
         else
             patternNum = 0;
