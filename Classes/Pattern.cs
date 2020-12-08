@@ -18,12 +18,16 @@ public class Pattern : MonoBehaviour
     public int[,] pattern = new int[16,8];
     public bool[,] patternMoves = new bool[16, 8];
     public GameObject[,] pieces = new GameObject[16, 8];
+    public GameObject[,] fields = new GameObject[16, 8];
 
     public Prefabs prefabs;
+    public Patterns patterns;
+
+    public King king;
 
     private void Start()
     {
-        pattern[3,5]=102;
+        patterns.getRandomPattern(ref pattern);
 
         spawnPattern();
         scanPattern();
@@ -63,13 +67,24 @@ public class Pattern : MonoBehaviour
     {
         for (int i = 0; i < 16; i++)
         {
+            bool isWhite = i%2==0;
             for (int j = 0; j < 8; j++)
             {
+                int id = 2;
+                if (isWhite)
+                    id = 1;
+                fields[i, j] = Instantiate(prefabs.getPrefabByID(id));
+                fields[i, j].transform.SetParent(gameObject.transform, true);
+                fields[i, j].transform.localPosition = new Vector3(-4 + 1.3f * j, -0.65f, 1.3f * i);
+                fields[i, j].GetComponent<Field>().x = j;
+                fields[i, j].GetComponent<Field>().y = i;
+                fields[i, j].GetComponent<Field>().king = king;
+                isWhite = !isWhite;
                 if (pattern[i, j] != 0)
                 {
                     pieces[i, j] = Instantiate(prefabs.getPrefabByID(pattern[i, j]));
                     pieces[i, j].transform.SetParent(gameObject.transform, true);
-                    pieces[i, j].transform.localPosition = new Vector3(-4.375f + 1.25f * j, 0, 4.375f - 1.25f * i);
+                    pieces[i, j].transform.localPosition = new Vector3(-4 + 1.3f * j, 0, 1.3f * i);
                 }
             }
         }
