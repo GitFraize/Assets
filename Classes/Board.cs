@@ -32,4 +32,9 @@ public class Board : MonoBehaviour
             patternNum = 0;
         nowPatternNum++;
     }
+    public void deleteOldPattern()
+    {
+        Destroy(king.nowPattern.gameObject);
+        createNewPattern();
+    }
 }

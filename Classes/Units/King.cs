@@ -26,7 +26,7 @@ public class King : MonoBehaviour
             if (y + Y > 15)
             {
                 y = 0;
-                Destroy(nowPattern.gameObject);
+                gameObject.GetComponentInParent<Board>().deleteOldPattern();
                 nowPattern = _pattern;
             }
             else
