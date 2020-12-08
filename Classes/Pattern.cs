@@ -31,6 +31,140 @@ public class Pattern : MonoBehaviour
     }
     public void scanPattern()
     {
+        for (int i = 0; i < 16; i++)
+            for (int j = 0; j < 8; j++)
+                patternMoves[i, j] = true;
+        for (int i=0;i<16;i++)
+            for(int j = 0; j < 8; j++)
+            {
+                switch (pattern[i, j])
+                {
+                    case 101:
+                        {
+                            if (j > 0)
+                                patternMoves[i - 1, j - 1] = false;
+                            if (j < 7)
+                                patternMoves[i - 1, j + 1] = false;
+                        }
+                        break;
+                    case 102:
+                        {
+                            int n = j - 1;
+                            while (n >= 0)
+                            {
+                                patternMoves[i, n] = false;
+                                if (pattern[i, n] == 0)
+                                    n--;
+                                else
+                                    break;
+                            }
+                            n = j + 1;
+                            while (n <= 7)
+                            {
+                                patternMoves[i, n] = false;
+                                if (pattern[i, n] == 0)
+                                    n++;
+                                else
+                                    break;
+                            }
+                            n = i + 1;
+                            while (n <= 15)
+                            {
+                                patternMoves[n, j] = false;
+                                if (pattern[n, j] == 0)
+                                    n++;
+                                else
+                                    break;
+                            }
+                            n = i - 1;
+                            while (n >= 0)
+                            {
+                                patternMoves[n, j] = false;
+                                if (pattern[n, j] == 0)
+                                    n--;
+                                else
+                                    break;
+                            }
+                        }
+                        break;
+                    case 103:
+                        {
+                            if (i > 0 && j > 1)
+                                patternMoves[i - 1, j - 2] = false;
+                            if (i > 0 && j < 6)
+                                patternMoves[i - 1, j + 2] = false;
+                            if (i > 1 && j > 0)
+                                patternMoves[i - 2, j - 1] = false;
+                            if (i > 1 && j < 7)
+                                patternMoves[i - 2, j + 1] = false;
+                            if (i < 15 && j > 1)
+                                patternMoves[i + 1, j - 2] = false;
+                            if (i < 15 && j < 6)
+                                patternMoves[i + 1, j + 2] = false;
+                            if (i <14 && j > 0)
+                                patternMoves[i + 2, j - 1] = false;
+                            if (i <14 && j < 7)
+                                patternMoves[i + 2, j + 1] = false;
+                        }
+                        break;
+                    case 104:
+                        {
+                            int n = i - 1;
+                            int m = j - 1;
+                            while (n >= 0 && m >= 0)
+                            {
+                                patternMoves[n, m] = false;
+                                if (pattern[n, m] == 0)
+                                {
+                                    n--;
+                                    m--;
+                                }
+                                else
+                                    break;
+                            }
+                            n = i + 1;
+                            m = j - 1;
+                            while (n <= 15 && m >= 0)
+                            {
+                                patternMoves[n, m] = false;
+                                if (pattern[n, m] == 0)
+                                {
+                                    n++;
+                                    m--;
+                                }
+                                else
+                                    break;
+                            }
+                            n = i + 1;
+                            m = j + 1;
+                            while (n <= 15 && m <= 7)
+                            {
+                                patternMoves[n, m] = false;
+                                if (pattern[n, m] == 0)
+                                {
+                                    n++;
+                                    m++;
+                                }
+                                else
+                                    break;
+                            }
+                            n = i - 1;
+                            m = j + 1;
+                            while (n >=0 && m <= 7)
+                            {
+                                patternMoves[n, m] = false;
+                                if (pattern[n, m] == 0)
+                                {
+                                    n--;
+                                    m++;
+                                }
+                                else
+                                    break;
+                            }
+                        }
+                        break;
+                }
+            }
     }
 
     public void spawnPattern()

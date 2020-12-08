@@ -10,24 +10,36 @@ public class King : MonoBehaviour
     {
         int X = 0, Y = 0;
         X = _x != x ? (_x - x) / Mathf.Abs(_x - x) : X = 0;
-        x += X;
+        Y = _y != y ? (_y - y) / Mathf.Abs(_y - y) : Y = 0;
         if (nowPattern.patternNum == _pattern.patternNum) {
-            Y = _y != y ? (_y - y) / Mathf.Abs(_y - y) : Y = 0;
-            y += Y;
+            if (nowPattern.patternMoves[y + Y, x + X])
+            {
+                y += Y;
+                x += X;
+                gY += Y;
+                gameObject.transform.Translate(new Vector3(X * 1.3f, 0, Y * 1.3f));
+            }
         }
-        else
+        else if(nowPattern.patternMoves[y + Y, x + X])
         {
             Y = 1;
-            if (y + 1 > 15)
+            if (y + Y > 15)
             {
                 y = 0;
                 Destroy(nowPattern.gameObject);
                 nowPattern = _pattern;
             }
             else
-                y+=Y;
+                y += Y;
+            x += X;
+            gY += Y;
+            gameObject.transform.Translate(new Vector3(X * 1.3f, 0, Y * 1.3f));
         }
-        gY += Y;
-        gameObject.transform.Translate(new Vector3(X * 1.3f, 0, Y * 1.3f));
+        if (nowPattern.pattern[y, x] != 0)
+        {
+            Destroy(nowPattern.pieces[y, x]);
+            nowPattern.pattern[y, x] = 0;
+            nowPattern.scanPattern();
+        }
     }
 }
