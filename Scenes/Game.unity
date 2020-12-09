@@ -640,7 +640,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 300}
+  m_SizeDelta: {x: 500, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1311211710
 MonoBehaviour:
@@ -834,6 +834,8 @@ MonoBehaviour:
   x: 4
   y: 0
   gY: 0
+  checkPrefab: {fileID: 3535343803157481677, guid: 4e2744bacd7fffd41b8da79d868f3d1e, type: 3}
+  canvas: {fileID: 974970087}
 --- !u!65 &1683110648
 BoxCollider:
   m_ObjectHideFlags: 0
