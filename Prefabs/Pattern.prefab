@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8050017359949484150}
   - component: {fileID: 8050017359949484153}
+  - component: {fileID: 7082154181558691840}
   m_Layer: 0
   m_Name: Pattern
-  m_TagString: Untagged
+  m_TagString: Pattern
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,5 +44,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9073f764972bab249b985b3c71d84764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  patternNum: 0
   prefabs: {fileID: 0}
   patterns: {fileID: 0}
+  king: {fileID: 0}
+--- !u!65 &7082154181558691840
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8050017359949484151}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: -1.8, z: 20.65}

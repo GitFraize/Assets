@@ -90,6 +90,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6838946979152431048}
+  - component: {fileID: 4977797894955661726}
   m_Layer: 0
   m_Name: rook
   m_TagString: Untagged
@@ -112,3 +113,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &4977797894955661726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6170778833003535730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc04172c909dbec4e8e7de4e76c1418a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pieceCost: 1
+  animateSpeed: 2

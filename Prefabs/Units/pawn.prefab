@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 523733627326349045}
-  - component: {fileID: 6765008260840743410}
+  - component: {fileID: 6233546088919715999}
   m_Layer: 0
   m_Name: pawn
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &6765008260840743410
+--- !u!114 &6233546088919715999
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,9 +41,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 869049975186056271}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99f6a79647c176c4fa4a2d976b6c03e7, type: 3}
+  m_Script: {fileID: 11500000, guid: bc04172c909dbec4e8e7de4e76c1418a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pieceCost: 1
+  animateSpeed: 20
 --- !u!1 &8179301880047180950
 GameObject:
   m_ObjectHideFlags: 0
