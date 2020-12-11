@@ -13,6 +13,10 @@ public class GameOver : MonoBehaviour
             Time.timeScale = 0;
             restartButton.gameObject.SetActive(true);
         }
+        if(other.gameObject.GetComponent<Pattern>() != null)
+        {
+            other.gameObject.GetComponentInParent<Board>().deleteOldPattern(other.gameObject);
+        }
     }
 
     public void restart()
