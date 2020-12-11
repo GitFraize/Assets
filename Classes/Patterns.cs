@@ -310,6 +310,6 @@ public class Patterns : MonoBehaviour
         int value = (int)Random.Range(0f, 29f);
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++)
-                array[8+(7-i), j] = patterns[value, i, j];
+                array[4+(7-i), j] = patterns[value, i, j];
     }
 }

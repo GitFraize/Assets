@@ -12,10 +12,10 @@ public class Pattern : MonoBehaviour
      * ID 105 : Queen
      */
     public int patternNum;
-    public int[,] pattern = new int[16,8];
-    public bool[,] patternMoves = new bool[16, 8];
-    public GameObject[,] pieces = new GameObject[16, 8];
-    public GameObject[,] fields = new GameObject[16, 8];
+    public int[,] pattern = new int[12,8];
+    public bool[,] patternMoves = new bool[12, 8];
+    public GameObject[,] pieces = new GameObject[12, 8];
+    public GameObject[,] fields = new GameObject[12, 8];
 
     public Prefabs prefabs;
     public Patterns patterns;
@@ -31,10 +31,10 @@ public class Pattern : MonoBehaviour
     }
     public void scanPattern()
     {
-        for (int i = 0; i < 16; i++)
+        for (int i = 0; i < 12; i++)
             for (int j = 0; j < 8; j++)
                 patternMoves[i, j] = true;
-        for (int i=0;i<16;i++)
+        for (int i=0;i<12;i++)
             for(int j = 0; j < 8; j++)
             {
                 switch (pattern[i, j])
@@ -68,7 +68,7 @@ public class Pattern : MonoBehaviour
                                     break;
                             }
                             n = i + 1;
-                            while (n <= 15)
+                            while (n <= 11)
                             {
                                 patternMoves[n, j] = false;
                                 if (pattern[n, j] == 0)
@@ -97,13 +97,13 @@ public class Pattern : MonoBehaviour
                                 patternMoves[i - 2, j - 1] = false;
                             if (i > 1 && j < 7)
                                 patternMoves[i - 2, j + 1] = false;
-                            if (i < 15 && j > 1)
+                            if (i < 11 && j > 1)
                                 patternMoves[i + 1, j - 2] = false;
-                            if (i < 15 && j < 6)
+                            if (i < 11 && j < 6)
                                 patternMoves[i + 1, j + 2] = false;
-                            if (i <14 && j > 0)
+                            if (i <10 && j > 0)
                                 patternMoves[i + 2, j - 1] = false;
-                            if (i <14 && j < 7)
+                            if (i <10 && j < 7)
                                 patternMoves[i + 2, j + 1] = false;
                         }
                         break;
@@ -124,7 +124,7 @@ public class Pattern : MonoBehaviour
                             }
                             n = i + 1;
                             m = j - 1;
-                            while (n <= 15 && m >= 0)
+                            while (n <= 11 && m >= 0)
                             {
                                 patternMoves[n, m] = false;
                                 if (pattern[n, m] == 0)
@@ -137,7 +137,7 @@ public class Pattern : MonoBehaviour
                             }
                             n = i + 1;
                             m = j + 1;
-                            while (n <= 15 && m <= 7)
+                            while (n <= 11 && m <= 7)
                             {
                                 patternMoves[n, m] = false;
                                 if (pattern[n, m] == 0)
@@ -169,7 +169,7 @@ public class Pattern : MonoBehaviour
 
     public void spawnPattern()
     {
-        for (int i = 0; i < 16; i++)
+        for (int i = 0; i < 12; i++)
         {
             bool isWhite = i%2==0;
             for (int j = 0; j < 8; j++)
