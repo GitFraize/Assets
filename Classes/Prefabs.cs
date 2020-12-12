@@ -11,7 +11,6 @@ public class Prefabs : MonoBehaviour
      * ID 104 : Bishop
      * ID 105 : Queen
      */
-    public GameObject _201;
     public GameObject _001;
     public GameObject _002;
     public GameObject _101;
@@ -19,6 +18,7 @@ public class Prefabs : MonoBehaviour
     public GameObject _103;
     public GameObject _104;
     public GameObject _105;
+    public GameObject _201;
 
     public GameObject getPrefabByID(int id)
     {
@@ -32,7 +32,7 @@ public class Prefabs : MonoBehaviour
             case 104: return _104;
             case 105: return _105;
             case 201: return _201;
-            default: return _001;
+            default: return null;
         }
     }
 }

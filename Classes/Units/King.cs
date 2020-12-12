@@ -1,66 +1,54 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 public class King : MonoBehaviour
 {
     public int x = 4;
     public int y = 0;
     public int gY = 0;
 
-    public Pattern nowPattern { get; set; }
     public GameObject checkPrefab;
     public Canvas canvas;
-    public void moveKing(int _x, int _y, Pattern _pattern)
+
+    public Board board;
+    
+    private void Start()
+    {
+        board = gameObject.GetComponentInParent<Board>();
+    }
+
+    public void moveKing(int _x, int _y)
     {
         int X = _x != x ? (_x - x) / Mathf.Abs(_x - x) : X = 0;
         int Y = _y != y ? (_y - y) / Mathf.Abs(_y - y) : Y = 0;
-
-        if (nowPattern.patternNum >= _pattern.patternNum)
+        _y = Y + y;
+        _y %= 48;
+        if (board._fields[_y, x + X].kingCanMove)
         {
-            if (nowPattern.patternNum > _pattern.patternNum)
-                if (gY % 12 != 0)
-                    Y = -1;
-                else
-                    Y = 0;
-            if (nowPattern.patternMoves[y + Y, x + X])
+            x += X;
+            y += Y;
+            gameObject.transform.Translate(new Vector3(1.3f * X, 0, 1.3f * Y));
+            if (board._fields[_y, x].piece != null)
             {
-                y += Y;
-                x += X;
-                gY += Y;
-                gameObject.transform.Translate(new Vector3(X * 1.3f, 0, Y * 1.3f));
+                board._fields[_y, x]._piece.killPiece();
+                board.scanPattern();
+                showText("Ням!", 0.15f, 0.3f, 0.9f);
             }
-            else
-                showCheck();
         }
-        else if (nowPattern.patternNum < _pattern.patternNum)
-        {
-            if (nowPattern.patternMoves[y + Y, x + X])
-            {
-                Y = 1;
-                if (y + Y > 11)
-                {
-                    y = 0;
-                    nowPattern = _pattern;
-                }
-                else
-                    y += Y;
-                x += X;
-                gY += Y;
-                gameObject.transform.Translate(new Vector3(X * 1.3f, 0, Y * 1.3f));
-            }
-            else
-                showCheck();
-        }
-        if (nowPattern.pattern[y, x] != 0)
-        {
-            nowPattern.pieces[y, x].GetComponent<Piece>().killPiece();
-            nowPattern.pattern[y, x] = 0;
-            nowPattern.scanPattern();
-        }
+        else
+            showText("Шах!", 1, 0.15f, 0.15f);
     }
 
-    void showCheck()
+    public void showText(string text,float r, float g, float b)
     {
         GameObject check = Instantiate(checkPrefab);
+        check.GetComponent<CheckText>().text.color = new Color(r, g, b);
+        check.GetComponent<CheckText>().text.text = text;
         check.transform.SetParent(canvas.transform);
         check.transform.localPosition = new Vector3(Input.mousePosition.x - Screen.width / 2, Input.mousePosition.y - Screen.height / 2, 0);
+    }
+    public void gameOver()
+    {
+        board.isMoving = false;
+        Destroy(gameObject);
     }
 }

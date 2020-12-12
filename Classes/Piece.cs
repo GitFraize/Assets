@@ -2,25 +2,16 @@
 
 public class Piece : MonoBehaviour
 {
-    public int pieceCost = 1;
-    bool isAnimate = false;
-    public float animateSpeed=1;
-    float startT, stopT;
-
-    private void Update()
+    public int pId = 0;
+    public void spawnPiece(int _pId)
     {
-        if (isAnimate)
-        {
-            int k = Random.Range(0,1);
-            if (k == 0)
-                k = -1;
-            gameObject.transform.Rotate(new Vector3(Time.deltaTime * animateSpeed*k, Time.deltaTime * animateSpeed*k, k*Time.deltaTime * animateSpeed));
-            stopT = Time.time;
-        }
+        pId = _pId;
+        gameObject.transform.localPosition = new Vector3(0, 0.5f, 0);
     }
     public void killPiece()
     {
-        isAnimate = true;
-        startT = Time.time;
+        gameObject.GetComponentInParent<Field>().piece = null;
+        gameObject.GetComponentInParent<Field>()._piece = null;
+        Destroy(gameObject);
     }
 }

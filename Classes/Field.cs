@@ -2,25 +2,49 @@
 
 public class Field : MonoBehaviour
 {
-    public int x { get; set; }
-    public int y { get; set; }
+    int x, y;
 
+    public GameObject piece;
+    public GameObject parent;
+    public Piece _piece;
     public King king;
-    public Pattern pattern;
-    private void Start()
+
+    public bool kingCanMove = true;
+
+    void OnCollisionEnter(Collision other)
     {
-        pattern = gameObject.GetComponentInParent<Pattern>();
+        if (other.gameObject.name == "Destroyer")
+        {
+            if (king.x == x && king.y == y)
+                king.gameOver();
+            if (x == 0)
+                king.board.deleteOldLine(parent);
+        }
     }
     private void OnMouseDown()
     {
-        king.moveKing(x, y, pattern);
+        king.moveKing(x, y);
     }
-    public void spawnField(int _x,int _y,King _king, GameObject _parent)
+    public void spawnField(int _x, int _y, GameObject _parent, King _king, int _pId, GameObject _pPrefab)
     {
-        gameObject.transform.SetParent(_parent.transform, true);
         x = _x;
         y = _y;
-        gameObject.transform.localPosition = new Vector3(-4 + 1.3f * x, -0.65f, 1.3f * y);
+        parent=_parent;
         king = _king;
+        gameObject.name = "field #" + _x;
+        gameObject.transform.localPosition = new Vector3(_x * 1.3f - 4.55f, 0, _y * 1.3f);
+        if (_pPrefab != null)
+        {
+            piece = Instantiate(_pPrefab);
+            piece.transform.SetParent(gameObject.transform);
+            piece.AddComponent<Piece>();
+            piece.GetComponent<Piece>().spawnPiece(_pId);
+            _piece = piece.GetComponent<Piece>();
+        }
+        else
+        {
+            piece = null;
+            _piece = null;
+        }
     }
 }

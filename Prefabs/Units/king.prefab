@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2786414090180428622}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.7, y: 0, z: 0}
+  m_LocalPosition: {x: 0.7, y: 0.65, z: 0}
   m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_Children:
   - {fileID: 2706857183066482860}
@@ -63,6 +63,7 @@ MonoBehaviour:
   gY: 0
   checkPrefab: {fileID: 3535343803157481677, guid: 4e2744bacd7fffd41b8da79d868f3d1e, type: 3}
   canvas: {fileID: 0}
+  board: {fileID: 0}
 --- !u!1 &6568112179428096919
 GameObject:
   m_ObjectHideFlags: 0
