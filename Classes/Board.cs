@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Board : MonoBehaviour
 {
@@ -7,21 +6,16 @@ public class Board : MonoBehaviour
     public Prefabs prefabs;
     public Patterns patterns;
     int _lN = 0, _l = 0;
-    public Field[,] _fields = new Field[49, 8];
+    public Field[,] _fields = new Field[25, 8];
     int[,] nextPattern = new int[12, 8];
-
-    public float movingSpeed;
-    public float mBFrequency = 0.05f;
-    public bool isMoving = true;
 
     public void Start()
     {
         patterns = gameObject.AddComponent<Patterns>();
         generateNextPattern();
-        for (int i = 0; i < 49; i++)
+        for (int i = 0; i < 25; i++)
             createNewLine();
         scanPattern();
-        StartCoroutine(movingBoard());
     }
     public void generateNextPattern()
     {
@@ -39,10 +33,10 @@ public class Board : MonoBehaviour
             GameObject newField = Instantiate(prefabs.getPrefabByID((i + _l) % 2 + 1));
             newField.transform.SetParent(newLine.transform);
             newField.AddComponent<Field>();
-            _fields[_l%48, i] = newField.GetComponent<Field>();
-            _fields[_l%48, i].spawnField(i, _l, newLine, king, nextPattern[_lN % 12, i], prefabs.getPrefabByID(nextPattern[_lN % 12, i]));
+            _fields[_l%24, i] = newField.GetComponent<Field>();
+            _fields[_l%24, i].spawnField(i, _l, newLine, king, nextPattern[_lN % 12, i], prefabs.getPrefabByID(nextPattern[_lN % 12, i]));
         }
-        if (_lN < 48)
+        if (_lN < 24)
             _lN++;
         else
             _lN = 0;
@@ -58,10 +52,10 @@ public class Board : MonoBehaviour
     }
     public void scanPattern()
     {
-        for (int i = 0; i < 48; i++)
+        for (int i = 0; i < 24; i++)
             for (int j = 0; j < 8; j++)
                 _fields[i, j].kingCanMove = true;
-        for (int i = 0; i < 48; i++)
+        for (int i = 0; i < 24; i++)
             for (int j = 0; j < 8; j++)
             {
                 if (_fields[i, j].piece != null)
@@ -71,7 +65,7 @@ public class Board : MonoBehaviour
                             {
                                 int _i = i;
                                 if (i == 0)
-                                    _i = 48;
+                                    _i = 24;
                                 if (j > 0)
                                     _fields[_i - 1, j - 1].kingCanMove = false;
                                 if (j < 7)
@@ -196,14 +190,5 @@ public class Board : MonoBehaviour
                             break;
                     }
             }
-    }
-    private IEnumerator movingBoard()
-    {
-        while (true)
-        {
-            if (isMoving)
-                gameObject.transform.Translate(new Vector3(0, 0, -movingSpeed * mBFrequency));
-            yield return new WaitForSeconds(mBFrequency);
-        }
     }
 }
