@@ -11,9 +11,9 @@ public class Field : MonoBehaviour
 
     public bool kingCanMove = true;
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "Destroyer")
+        if (other.name == "Destroyer")
         {
             if (king.x == x && king.y == y)
                 king.gameOver();
