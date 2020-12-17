@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2707788321834970539
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2707788321834970537}
+  - component: {fileID: 2707788321834970536}
+  m_Layer: 0
+  m_Name: VoxelSet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2707788321834970537
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2707788321834970539}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 435.9893, y: 85.99028, z: -14.120941}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2707788321834970536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2707788321834970539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a61bca576536ea44ba2358d64485b9f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _001: {fileID: 8435257817584962681, guid: bf41aea6107d6c044ab6bb1124496647, type: 3}
+  _002: {fileID: 698542760685178317, guid: 8d19aa2c9bb6feb40a8a946803c651d4, type: 3}
+  _100: {fileID: 2786414090180428622, guid: 852b8d8e3fae0ef4cae358b6866a0450, type: 3}
+  _101: {fileID: 869049975186056271, guid: 057b9b542b993e444936f4caba700ecc, type: 3}
+  _102: {fileID: 6170778833003535730, guid: 0d5520916d72e714c8b141a56d26f329, type: 3}
+  _103: {fileID: 4908197482300920688, guid: 4eaa04668f32d664ebb9c66016c50c6a, type: 3}
+  _104: {fileID: 3822056736261303222, guid: 56ed73a5e1e16424fab7109810410bfc, type: 3}
+  _105: {fileID: 3822056736261303222, guid: 56ed73a5e1e16424fab7109810410bfc, type: 3}
+  _201: {fileID: 3535343803157481677, guid: 4e2744bacd7fffd41b8da79d868f3d1e, type: 3}

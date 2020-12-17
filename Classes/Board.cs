@@ -1,19 +1,28 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
+    static int ArraySize = 25;
+    public int arraySize = ArraySize;
     public King king;
-    public Prefabs prefabs;
+
+    public GameObject DefaultSet;
+    public GameObject VoxelSet;
+    Prefabs prefabs;
     public Patterns patterns;
+    public Canvas canvas;
     int _lN = 0, _l = 0;
-    public Field[,] _fields = new Field[25, 8];
+    public Field[,] _fields = new Field[ArraySize, 8];
     int[,] nextPattern = new int[12, 8];
 
     public void Start()
     {
+        changeSet("DefaultSet");
+        spawnKing();
         patterns = gameObject.AddComponent<Patterns>();
         generateNextPattern();
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < ArraySize; i++)
             createNewLine();
         scanPattern();
     }
@@ -36,7 +45,7 @@ public class Board : MonoBehaviour
             _fields[_l%24, i] = newField.GetComponent<Field>();
             _fields[_l%24, i].spawnField(i, _l, newLine, king, nextPattern[_lN % 12, i], prefabs.getPrefabByID(nextPattern[_lN % 12, i]));
         }
-        if (_lN < 24)
+        if (_lN < (ArraySize-1))
             _lN++;
         else
             _lN = 0;
@@ -52,10 +61,10 @@ public class Board : MonoBehaviour
     }
     public void scanPattern()
     {
-        for (int i = 0; i < 24; i++)
+        for (int i = 0; i < (ArraySize - 1); i++)
             for (int j = 0; j < 8; j++)
                 _fields[i, j].kingCanMove = true;
-        for (int i = 0; i < 24; i++)
+        for (int i = 0; i < (ArraySize - 1); i++)
             for (int j = 0; j < 8; j++)
             {
                 if (_fields[i, j].piece != null)
@@ -65,7 +74,7 @@ public class Board : MonoBehaviour
                             {
                                 int _i = i;
                                 if (i == 0)
-                                    _i = 24;
+                                    _i = (ArraySize - 1);
                                 if (j > 0)
                                     _fields[_i - 1, j - 1].kingCanMove = false;
                                 if (j < 7)
@@ -190,5 +199,38 @@ public class Board : MonoBehaviour
                             break;
                     }
             }
+    }
+    void spawnKing()
+    {
+        GameObject King;
+        King = Instantiate(prefabs.getPrefabByID(100));
+        King.transform.SetParent(gameObject.transform);
+        King.AddComponent<King>();
+        king = King.GetComponent<King>();
+        king.x = 4;
+        king.y = 2;
+        King.transform.localPosition = new Vector3(1.3f*king.x-3*1.3f-0.65f, 0.65f, 1.3f*king.y);
+        king.canvas = canvas;
+        king.checkPrefab = prefabs.getPrefabByID(401);
+    }
+    public void changeSet(string setName)
+    {
+        switch (setName)
+        {
+            case "DefaultSet":
+                {
+                    DefaultSet = Instantiate(DefaultSet);
+                    prefabs = DefaultSet.GetComponent<Prefabs>();
+                    Destroy(DefaultSet);
+                }
+                break;
+            case "VoxelSet":
+                {
+                    VoxelSet = Instantiate(VoxelSet);
+                    prefabs = VoxelSet.GetComponent<Prefabs>();
+                    Destroy(VoxelSet);
+                }
+                break;
+        }
     }
 }
