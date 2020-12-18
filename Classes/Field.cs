@@ -8,6 +8,7 @@ public class Field : MonoBehaviour
     public GameObject parent;
     public Piece _piece;
     public King king;
+    Board board;
 
     public bool kingCanMove = true;
 
@@ -15,22 +16,25 @@ public class Field : MonoBehaviour
     {
         if (other.name == "Destroyer")
         {
-            if (king.x == x && king.y == y)
-                king.gameOver();
+            if (king != null)
+                if (king.x == x && king.y == y)
+                    king.gameOver();
             if (x == 0)
-                king.board.deleteOldLine(parent);
+                board.deleteOldLine(parent);
         }
     }
     private void OnMouseDown()
     {
-        king.moveKing(x, y);
+        if (king != null)
+            king.moveKing(x, y);
     }
-    public void spawnField(int _x, int _y, GameObject _parent, King _king, int _pId, GameObject _pPrefab)
+    public void spawnField(int _x, int _y, Board _board, GameObject _parent, King _king, int _pId, GameObject _pPrefab)
     {
         x = _x;
         y = _y;
-        parent=_parent;
+        parent = _parent;
         king = _king;
+        board = _board;
         gameObject.name = "field #" + _x;
         gameObject.transform.localPosition = new Vector3(_x * 1.3f - 4.55f, 0, _y * 1.3f);
         if (_pPrefab != null)

@@ -16,10 +16,13 @@ public class Board : MonoBehaviour
     public Field[,] _fields = new Field[ArraySize, 8];
     int[,] nextPattern = new int[12, 8];
 
+    public bool isSpawnKing = true;
+
     public void Start()
     {
         changeSet("DefaultSet");
-        spawnKing();
+        if(isSpawnKing)
+           spawnKing();
         patterns = gameObject.AddComponent<Patterns>();
         generateNextPattern();
         for (int i = 0; i < ArraySize; i++)
@@ -43,7 +46,8 @@ public class Board : MonoBehaviour
             newField.transform.SetParent(newLine.transform);
             newField.AddComponent<Field>();
             _fields[_l%24, i] = newField.GetComponent<Field>();
-            _fields[_l%24, i].spawnField(i, _l, newLine, king, nextPattern[_lN % 12, i], prefabs.getPrefabByID(nextPattern[_lN % 12, i]));
+            _fields[_l%24, i].spawnField(i, _l, this,
+                newLine, king, nextPattern[_lN % 12, i], prefabs.getPrefabByID(nextPattern[_lN % 12, i]));
         }
         if (_lN < (ArraySize-1))
             _lN++;
