@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 35431b94e1e7a2443aec38b8165d743d
+guid: c0f02793b39eae542a1bfe5fda6d3127
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Thintel
+  - Minecraft Rus
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

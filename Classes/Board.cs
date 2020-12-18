@@ -20,7 +20,7 @@ public class Board : MonoBehaviour
 
     public void Start()
     {
-        changeSet("DefaultSet");
+        changeSet("VoxelSet");
         if(isSpawnKing)
            spawnKing();
         patterns = gameObject.AddComponent<Patterns>();
