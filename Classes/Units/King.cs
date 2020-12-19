@@ -4,12 +4,13 @@ public class King : MonoBehaviour
 {
     public int x = 4;
     public int y = 0;
-    public int gY = 0;
+    public int gY;
 
     public GameObject checkPrefab;
     public Canvas canvas;
 
     public Board board;
+    public GameObject panel;
     
     private void Start()
     {
@@ -29,13 +30,20 @@ public class King : MonoBehaviour
             gameObject.transform.Translate(new Vector3(1.3f * X, 0, 1.3f * Y));
             if (board._fields[_y, x].piece != null)
             {
+                switch(board._fields[_y, x]._piece.pId)
+                {
+                    case 101: board.addCrowns(1); break;
+                    case 102: board.addCrowns(5); break;
+                    case 103: board.addCrowns(3); break;
+                    case 104: board.addCrowns(3); break;
+                }
                 board._fields[_y, x]._piece.killPiece();
                 board.scanPattern();
                 showText("Ням!", 0.15f, 0.3f, 0.9f);
             }
         }
         else
-            showText("Шах!", 1, 0.15f, 0.15f);
+            showText("шах! "+ _y + ", " + (x + X), 1, 0.15f, 0.15f);
     }
 
     public void showText(string text,float r, float g, float b)
@@ -50,5 +58,9 @@ public class King : MonoBehaviour
     {
         board.gameObject.GetComponent<Moving>().isMoving= false;
         Destroy(gameObject);
+    }
+    private void OnDestroy()
+    {
+        board.endGame();
     }
 }

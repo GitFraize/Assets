@@ -18,11 +18,28 @@ public class Board : MonoBehaviour
 
     public bool isSpawnKing = true;
 
+    public Text crownsShow;
+    public GameObject crownImage;
+    public int crowns = 0;
+    public GameObject panel;
+
+    public void endGame()
+    {
+        panel.AddComponent<EndGame>();
+        panel.GetComponent<EndGame>().setText(crownsShow, crownImage, crowns);
+    }
+    public void addCrowns(int value)
+    {
+        crowns += value;
+        crownsShow.text = crowns + "";
+        crownImage.GetComponent<CrownAnimate>().startAnimate();
+    }
+
     public void Start()
     {
         changeSet("VoxelSet");
-        if(isSpawnKing)
-           spawnKing();
+        if (isSpawnKing)
+            spawnKing();
         patterns = gameObject.AddComponent<Patterns>();
         generateNextPattern();
         for (int i = 0; i < ArraySize; i++)
@@ -44,16 +61,15 @@ public class Board : MonoBehaviour
         {
             GameObject newField = Instantiate(prefabs.getPrefabByID((i + _l) % 2 + 1));
             newField.transform.SetParent(newLine.transform);
-            newField.AddComponent<Field>();
-            _fields[_l%24, i] = newField.GetComponent<Field>();
-            _fields[_l%24, i].spawnField(i, _l, this,
+            _fields[_l % 24, i] = newField.GetComponent<Field>();
+            _fields[_l % 24, i].spawnField(i, _l, this,
                 newLine, king, nextPattern[_lN % 12, i], prefabs.getPrefabByID(nextPattern[_lN % 12, i]));
         }
-        if (_lN < (ArraySize-1))
+        if (_lN < (ArraySize - 1))
             _lN++;
         else
             _lN = 0;
-        if(_lN%12==0)
+        if (_lN % 12 == 0)
             generateNextPattern();
         _l++;
     }
@@ -213,7 +229,7 @@ public class Board : MonoBehaviour
         king = King.GetComponent<King>();
         king.x = 4;
         king.y = 2;
-        King.transform.localPosition = new Vector3(1.3f*king.x-3*1.3f-0.65f, 0.65f, 1.3f*king.y);
+        King.transform.localPosition = new Vector3(1.3f * king.x - 3 * 1.3f - 0.65f, 0.65f, 1.3f * king.y);
         king.canvas = canvas;
         king.checkPrefab = prefabs.getPrefabByID(401);
     }

@@ -2,7 +2,7 @@
 
 public class Field : MonoBehaviour
 {
-    int x, y;
+    public int x, y;
 
     public GameObject piece;
     public GameObject parent;
