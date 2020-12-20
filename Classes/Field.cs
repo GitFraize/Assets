@@ -11,7 +11,6 @@ public class Field : MonoBehaviour
     Board board;
 
     public bool kingCanMove = true;
-
     void OnTriggerEnter(Collider other)
     {
         if (other.name == "Destroyer")

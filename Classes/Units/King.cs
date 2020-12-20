@@ -22,7 +22,7 @@ public class King : MonoBehaviour
         int X = _x != x ? (_x - x) / Mathf.Abs(_x - x) : X = 0;
         int Y = _y != y ? (_y - y) / Mathf.Abs(_y - y) : Y = 0;
         _y = Y + y;
-        _y %= board.arraySize - 1;
+        _y %= board.getArraySize() - 1;
         if (board._fields[_y, x + X].kingCanMove)
         {
             x += X;

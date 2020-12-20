@@ -3,25 +3,30 @@ using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
-    static int ArraySize = 25;
-    public int arraySize = ArraySize;
-    public King king;
-
+    static int ArraySize = 25; //Константа размера массива _fields
+    public int getArraySize()
+    {
+        return ArraySize;
+    }//Метод, возвращающий Константу ArraySize. Не использовать в классе Board!
+    [Header("King ")]
+    public King king;//Ссылка на экземпляр класса King
+    public bool isSpawnKing = true;
+    public int crowns = 0;
+    [Header("Kits prefabs")]//Префабы наборов
     public GameObject DefaultSet;
     public GameObject VoxelSet;
-    Prefabs prefabs;
-    public Patterns patterns;
+    [Header("UI objects")]//Объекты UI: Canvas, Text и т.д.
     public Canvas canvas;
-    int _lN = 0, _l = 0;
-    public Field[,] _fields = new Field[ArraySize, 8];
-    int[,] nextPattern = new int[12, 8];
-
-    public bool isSpawnKing = true;
-
     public Text crownsShow;
     public GameObject crownImage;
-    public int crowns = 0;
     public GameObject panel;
+    [Header("Array _fields")]
+    public Field[,] _fields = new Field[ArraySize, 8];
+    [Header("Private variables")]
+    int _lN = 0, _l = 0, padding=0;
+    int[,] nextPattern = new int[12, 8];
+    Prefabs prefabs;
+    Patterns patterns;
 
     public void endGame()
     {
@@ -61,8 +66,8 @@ public class Board : MonoBehaviour
         {
             GameObject newField = Instantiate(prefabs.getPrefabByID((i + _l) % 2 + 1));
             newField.transform.SetParent(newLine.transform);
-            _fields[_l % 24, i] = newField.GetComponent<Field>();
-            _fields[_l % 24, i].spawnField(i, _l, this,
+            _fields[_l % (ArraySize - 1), i] = newField.GetComponent<Field>();
+            _fields[_l % (ArraySize-1), i].spawnField(i, _l, this,
                 newLine, king, nextPattern[_lN % 12, i], prefabs.getPrefabByID(nextPattern[_lN % 12, i]));
         }
         if (_lN < (ArraySize - 1))
@@ -77,147 +82,167 @@ public class Board : MonoBehaviour
     {
         Destroy(line);
         createNewLine();
+        padding++;
         scanPattern();
     }
     public void scanPattern()
     {
         for (int i = 0; i < (ArraySize - 1); i++)
             for (int j = 0; j < 8; j++)
-                _fields[i, j].kingCanMove = true;
+                if (_fields[i, j] != null)
+                    _fields[i, j].kingCanMove = true;
         for (int i = 0; i < (ArraySize - 1); i++)
             for (int j = 0; j < 8; j++)
             {
-                if (_fields[i, j].piece != null)
-                    switch (_fields[i, j]._piece.pId)
-                    {
-                        case 101:
-                            {
-                                int _i = i;
-                                if (i == 0)
-                                    _i = (ArraySize - 1);
-                                if (j > 0)
-                                    _fields[_i - 1, j - 1].kingCanMove = false;
-                                if (j < 7)
-                                    _fields[_i - 1, j + 1].kingCanMove = false;
-                            }
-                            break;
-                        case 102:
-                            {
-                                int n = j - 1;
-                                while (n >= 0)
+                if (_fields[i, j] != null)
+                    if (_fields[i, j].piece != null)
+                        switch (_fields[i, j]._piece.pId)
+                        {
+                            case 101:
                                 {
-                                    _fields[i, n].kingCanMove = false;
-                                    if (_fields[i, n]._piece == null)
-                                        n--;
-                                    else
-                                        break;
+                                    int _i = i;
+                                    if (i == 0)
+                                        _i = (ArraySize - 1);
+                                    if (j > 0)
+                                        _fields[_i - 1, j - 1].kingCanMove = false;
+                                    if (j < 7)
+                                        _fields[_i - 1, j + 1].kingCanMove = false;
                                 }
-                                n = j + 1;
-                                while (n <= 7)
+                                break;
+                            case 102:
                                 {
-                                    _fields[i, n].kingCanMove = false;
-                                    if (_fields[i, n]._piece == null)
-                                        n++;
-                                    else
-                                        break;
-                                }
-                                n = i + 1;
-                                while (n <= 11)
-                                {
-                                    _fields[n, j].kingCanMove = false;
-                                    if (_fields[n, j]._piece == null)
-                                        n++;
-                                    else
-                                        break;
-                                }
-                                n = i - 1;
-                                while (n >= 0)
-                                {
-                                    _fields[n, j].kingCanMove = false;
-                                    if (_fields[n, j]._piece == null)
-                                        n--;
-                                    else
-                                        break;
-                                }
-                            }
-                            break;
-                        case 103:
-                            {
-                                if (i > 0 && j > 1)
-                                    _fields[i - 1, j - 2].kingCanMove = false;
-                                if (i > 0 && j < 6)
-                                    _fields[i - 1, j + 2].kingCanMove = false;
-                                if (i > 1 && j > 0)
-                                    _fields[i - 2, j - 1].kingCanMove = false;
-                                if (i > 1 && j < 7)
-                                    _fields[i - 2, j + 1].kingCanMove = false;
-                                if (i < 11 && j > 1)
-                                    _fields[i + 1, j - 2].kingCanMove = false;
-                                if (i < 11 && j < 6)
-                                    _fields[i + 1, j + 2].kingCanMove = false;
-                                if (i < 10 && j > 0)
-                                    _fields[i + 2, j - 1].kingCanMove = false;
-                                if (i < 10 && j < 7)
-                                    _fields[i + 2, j + 1].kingCanMove = false;
-                            }
-                            break;
-                        case 104:
-                            {
-                                int n = i - 1;
-                                int m = j - 1;
-                                while (n >= 0 && m >= 0)
-                                {
-                                    _fields[n, m].kingCanMove = false;
-                                    if (_fields[n, m]._piece == null)
+                                    int n = j - 1;
+                                    while (n >= 0)
                                     {
-                                        n--;
-                                        m--;
+                                        _fields[i, n].kingCanMove = false;
+                                        if (_fields[i, n]._piece == null)
+                                            n--;
+                                        else
+                                            break;
                                     }
-                                    else
-                                        break;
-                                }
-                                n = i + 1;
-                                m = j - 1;
-                                while (n <= 11 && m >= 0)
-                                {
-                                    _fields[n, m].kingCanMove = false;
-                                    if (_fields[n, m]._piece == null)
+                                    n = j + 1;
+                                    while (n <= 7)
                                     {
-                                        n++;
-                                        m--;
+                                        _fields[i, n].kingCanMove = false;
+                                        if (_fields[i, n]._piece == null)
+                                            n++;
+                                        else
+                                            break;
                                     }
-                                    else
-                                        break;
-                                }
-                                n = i + 1;
-                                m = j + 1;
-                                while (n <= 11 && m <= 7)
-                                {
-                                    _fields[n, m].kingCanMove = false;
-                                    if (_fields[n, m]._piece == null)
+                                    n = i + 1;
+                                    while (n < ArraySize-1-padding)
                                     {
-                                        n++;
-                                        m++;
+                                        _fields[n, j].kingCanMove = false;
+                                        if (_fields[n, j]._piece == null)
+                                            n++;
+                                        else
+                                            break;
                                     }
-                                    else
-                                        break;
-                                }
-                                n = i - 1;
-                                m = j + 1;
-                                while (n >= 0 && m <= 7)
-                                {
-                                    _fields[n, m].kingCanMove = false;
-                                    if (_fields[n, m]._piece == null)
+                                    n = i - 1;
+                                    while (n >= padding)
                                     {
-                                        n--;
-                                        m++;
+                                        _fields[n, j].kingCanMove = false;
+                                        if (_fields[n, j]._piece == null)
+                                            n--;
+                                        else
+                                            break;
                                     }
-                                    else
-                                        break;
                                 }
-                            }
-                            break;
-                    }
+                                break;
+                            case 103:
+                                {
+                                    if (i > 0 && j > 1)
+                                        _fields[i - 1, j - 2].kingCanMove = false;
+                                    if (i > 0 && j < 6)
+                                        _fields[i - 1, j + 2].kingCanMove = false;
+                                    if (i > 1 && j > 0)
+                                        _fields[i - 2, j - 1].kingCanMove = false;
+                                    else
+                                        _fields[ArraySize - 2, j - 1].kingCanMove = false;
+                                    if (j < 7)
+                                        if (i > 1)
+                                            _fields[i - 2, j + 1].kingCanMove = false;
+                                        else
+                                            _fields[ArraySize - 3, j + 1].kingCanMove = false;
+                                    if (j > 1)
+                                        if (i < ArraySize - 2)
+                                            _fields[i + 1, j - 2].kingCanMove = false;
+                                        else
+                                            _fields[ArraySize - i, j - 2].kingCanMove = false;
+                                    if (j < 6)
+                                        if (i < ArraySize - 2)
+                                            _fields[i + 1, j + 2].kingCanMove = false;
+                                        else
+                                            _fields[ArraySize - i, j + 2].kingCanMove = false;
+                                    if (j > 0)
+                                        if (i < ArraySize - 3)
+                                            _fields[i + 2, j - 1].kingCanMove = false;
+                                        else
+                                            _fields[ArraySize - i + 2-1, j - 1].kingCanMove = false;
+                                    if(j < 7)
+                                    if (i < ArraySize-3)
+                                        _fields[i + 2, j + 1].kingCanMove = false;
+                                    else
+                                        _fields[ArraySize-i-1, j + 1].kingCanMove = false;
+                                }
+                                break;
+                            case 104:
+                                {
+                                    int n = i - 1;
+                                    int m = j - 1;
+                                    while (n >= 0 && m >= 0)
+                                    {
+                                        _fields[n, m].kingCanMove = false;
+                                        if (_fields[n, m]._piece == null)
+                                        {
+                                            n--;
+                                            m--;
+                                        }
+                                        else
+                                            break;
+                                    }
+                                    n = i + 1;
+                                    m = j - 1;
+                                    while (n < ArraySize-1 && m >= 0)
+                                    {
+                                        _fields[n, m].kingCanMove = false;
+                                        if (_fields[n, m]._piece == null)
+                                        {
+                                            n++;
+                                            m--;
+                                        }
+                                        else
+                                            break;
+                                    }
+                                    n = i + 1;
+                                    m = j + 1;
+                                    while (n < ArraySize-1 && m <= 7)
+                                    {
+                                        _fields[n, m].kingCanMove = false;
+                                        if (_fields[n, m]._piece == null)
+                                        {
+                                            n++;
+                                            m++;
+                                        }
+                                        else
+                                            break;
+                                    }
+                                    n = i - 1;
+                                    m = j + 1;
+                                    while (n >= 0 && m <= 7)
+                                    {
+                                        _fields[n, m].kingCanMove = false;
+                                        if (_fields[n, m]._piece == null)
+                                        {
+                                            n--;
+                                            m++;
+                                        }
+                                        else
+                                            break;
+                                    }
+                                }
+                                break;
+                        }
             }
     }
     void spawnKing()

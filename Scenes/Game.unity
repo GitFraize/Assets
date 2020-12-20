@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 895}
+  m_AnchoredPosition: {x: 0, y: 875}
   m_SizeDelta: {x: 1080, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &409766015
@@ -703,6 +703,7 @@ MonoBehaviour:
   VoxelSet: {fileID: 2707788321834970539, guid: 91c2e53a3a5008f46a4e15baaab8ab08, type: 3}
   patterns: {fileID: 0}
   canvas: {fileID: 974970087}
+  deletedLines: 0
   isSpawnKing: 1
   crownsShow: {fileID: 2002659889}
   crownImage: {fileID: 2000484963}
