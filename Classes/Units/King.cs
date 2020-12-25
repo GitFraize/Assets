@@ -23,21 +23,21 @@ public class King : MonoBehaviour
         int Y = _y != y ? (_y - y) / Mathf.Abs(_y - y) : Y = 0;
         _y = Y + y;
         _y %= board.getArraySize() - 1;
-        if (board._fields[_y, x + X].kingCanMove)
+        if (board.lines[_y].fields[x+X].kingCanMove)
         {
             x += X;
             y += Y;
             gameObject.transform.Translate(new Vector3(1.3f * X, 0, 1.3f * Y));
-            if (board._fields[_y, x].piece != null)
+            if (board.lines[_y].fields[x].piece != null)
             {
-                switch(board._fields[_y, x]._piece.pId)
+                switch(board.lines[_y].fields[x]._piece.pId)
                 {
                     case 101: board.addCrowns(1); break;
                     case 102: board.addCrowns(5); break;
                     case 103: board.addCrowns(3); break;
                     case 104: board.addCrowns(3); break;
                 }
-                board._fields[_y, x]._piece.killPiece();
+                board.lines[_y].fields[x]._piece.killPiece();
                 board.scanPattern();
                 showText("Ням!", 0.15f, 0.3f, 0.9f);
             }
