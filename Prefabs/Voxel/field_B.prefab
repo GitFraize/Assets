@@ -108,8 +108,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ddf534af95b4046b0c6012fd19a4ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  x: 0
+  y: 0
   piece: {fileID: 0}
   parent: {fileID: 0}
   _piece: {fileID: 0}
   king: {fileID: 0}
+  materialR: {fileID: 2100000, guid: c705e26ee0911e84aa65bd2525427dc6, type: 2}
   kingCanMove: 1
