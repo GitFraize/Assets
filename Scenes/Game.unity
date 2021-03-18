@@ -697,42 +697,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d907c750d7c472a479a7d4a382c25938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arraySize: 25
   king: {fileID: 0}
-  isSpawnKing: 0
-  crowns: 0
   DefaultSet: {fileID: 2572138706537176361, guid: f579cbf9b70a7cf4aa325cca06427927, type: 3}
   VoxelSet: {fileID: 2707788321834970539, guid: 91c2e53a3a5008f46a4e15baaab8ab08, type: 3}
+  patterns: {fileID: 0}
   canvas: {fileID: 974970087}
+  deletedLines: 0
+  isSpawnKing: 1
   crownsShow: {fileID: 2002659889}
   crownImage: {fileID: 2000484963}
+  crowns: 0
   panel: {fileID: 409766013}
-  lines:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _l: 0
-  pL: 0
 --- !u!4 &1724404540
 Transform:
   m_ObjectHideFlags: 0

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Field : MonoBehaviour
 {
@@ -9,17 +8,9 @@ public class Field : MonoBehaviour
     public GameObject parent;
     public Piece _piece;
     public King king;
-    public Board board;
-    MeshRenderer meshRendererD;
-    Color colorDefault;
-    public Color ColorRed=new Color(1,0,0,1);
-    public bool kingCanMove=true;
-    private void Start()
-    {
-        meshRendererD = gameObject.GetComponent<MeshRenderer>();
-        colorDefault = meshRendererD.material.color;
-        StartCoroutine(colorChange());
-    }
+    Board board;
+
+    public bool kingCanMove = true;
     void OnTriggerEnter(Collider other)
     {
         if (other.name == "Destroyer")
@@ -28,7 +19,7 @@ public class Field : MonoBehaviour
                 if (king.x == x && king.y == y)
                     king.gameOver();
             if (x == 0)
-                board.deleteOldLine();
+                board.deleteOldLine(parent);
         }
     }
     private void OnMouseDown()
@@ -44,7 +35,7 @@ public class Field : MonoBehaviour
         king = _king;
         board = _board;
         gameObject.name = "field #" + _x;
-        gameObject.transform.localPosition = new Vector3(_x * 1.3f - 4.55f, 0, 0);
+        gameObject.transform.localPosition = new Vector3(_x * 1.3f - 4.55f, 0, _y * 1.3f);
         if (_pPrefab != null)
         {
             piece = Instantiate(_pPrefab);
@@ -57,18 +48,6 @@ public class Field : MonoBehaviour
         {
             piece = null;
             _piece = null;
-        }
-    }
-    IEnumerator colorChange()
-    {
-        while (true)
-        {
-            if (meshRendererD != null)
-                if (kingCanMove)
-                    meshRendererD.material.color = colorDefault;
-                else
-                    meshRendererD.material.color = ColorRed;
-            yield return new WaitForSeconds(1.0f);
         }
     }
 }

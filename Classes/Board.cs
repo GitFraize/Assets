@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
-    static int ArraySize = 24; //Константа размера массива _fields
+    static int ArraySize = 25; //Константа размера массива _fields
     public int getArraySize()
     {
         return ArraySize;
@@ -23,8 +23,8 @@ public class Board : MonoBehaviour
     [Header("Array lines")]
     public LineOfFields[] lines = new LineOfFields[ArraySize];
     [Header("Private variables")]
+    int _lN = 0, _l = 0, padding=0;
     int[,] nextPattern = new int[12, 8];
-    public int _l=0, pL=0;
     Prefabs prefabs;
     Patterns patterns;
 
@@ -48,7 +48,7 @@ public class Board : MonoBehaviour
         patterns = gameObject.AddComponent<Patterns>();
         generateNextPattern();
         for (int i = 0; i < ArraySize; i++)
-            createNewLine(i);
+            createNewLine();
         scanPattern();
     }
     public void generateNextPattern()
@@ -56,39 +56,35 @@ public class Board : MonoBehaviour
         patterns.getRandomPattern(ref nextPattern);
     }
 
-    public void createNewLine(int _lN)
+    public void createNewLine()
     {
-        GameObject lineGO = new GameObject();
-        lineGO.name = "line #" +_lN;
-        lineGO.transform.SetParent(gameObject.transform);
-        lineGO.transform.localPosition = new Vector3(0, 0, 1.3f * _l);
-        lines[_lN] = lineGO.AddComponent<LineOfFields>();
-
-        for(int i = 0; i < 8; i++)
+        GameObject newLine = new GameObject();
+        LineOfFields _line=newLine.AddComponent<LineOfFields>();
+        newLine.name = "line #" + _l;
+        newLine.transform.SetParent(gameObject.transform);
+        newLine.transform.localPosition = new Vector3(0, 0, 0);
+        for (int i = 0; i < 8; i++)
         {
-            GameObject fieldGO = Instantiate(prefabs.getPrefabByID((i + _l) % 2 + 1));
-            fieldGO.transform.SetParent(lineGO.transform);
-            fieldGO.name = "field #" + i;
-            lines[_lN].fields[i] = fieldGO.GetComponent<Field>();
-            lines[_lN].fields[i].spawnField(i,_l,this,lineGO,king,nextPattern[pL,i], prefabs.getPrefabByID(nextPattern[pL, i]));
+            GameObject newField = Instantiate(prefabs.getPrefabByID((i + _l) % 2 + 1));
+            newField.transform.SetParent(newLine.transform);
+            _line.fields[i] = newField.GetComponent<Field>();
+            _line.fields[i].spawnField(i, _l, this,
+                newLine, king, nextPattern[_lN % 12, i], prefabs.getPrefabByID(nextPattern[_lN % 12, i]));
         }
-        _l++;
-        pL++;
-        if (pL > 11)
-        {
-            pL = 0;
+        lines[_l % (ArraySize - 1)] = _line;
+        if (_lN < (ArraySize - 1))
+            _lN++;
+        else
+            _lN = 0;
+        if (_lN % 12 == 0)
             generateNextPattern();
-        }
+        _l++;
     }
-    public void deleteOldLine()
+    public void deleteOldLine(GameObject line)
     {
-        Destroy(lines[0].gameObject);
-        for (int i = 0; i < ArraySize - 1; i++)
-            if (lines[i+1]!=null){
-                lines[i] = lines[i+1];
-                lines[i].gameObject.name = "line #" + i;
-            }
-        createNewLine(ArraySize-1);
+        Destroy(line);
+        createNewLine();
+        padding++;
         scanPattern();
     }
     public void scanPattern()
@@ -105,11 +101,14 @@ public class Board : MonoBehaviour
                         switch (lines[i].fields[j]._piece.pId)
                         {
                             case 101:
-                                if(i>0){
+                                {
+                                    int _i = i;
+                                    if (i == 0)
+                                        _i = (ArraySize - 1);
                                     if (j > 0)
-                                            lines[i - 1].fields[j - 1].kingCanMove = false;
+                                        lines[i-1].fields[j-1].kingCanMove = false;
                                     if (j < 7)
-                                        lines[i - 1].fields[j + 1].kingCanMove = false;
+                                        lines[i-1].fields[j+1].kingCanMove = false;
                                 }
                                 break;
                             case 102:
@@ -133,7 +132,7 @@ public class Board : MonoBehaviour
                                             break;
                                     }
                                     n = i + 1;
-                                    while (n < ArraySize - 1)
+                                    while (n < ArraySize-1-padding)
                                     {
                                         lines[n].fields[j].kingCanMove = false;
                                         if (lines[n].fields[j]._piece == null)
@@ -142,7 +141,7 @@ public class Board : MonoBehaviour
                                             break;
                                     }
                                     n = i - 1;
-                                    while (n >= 0)
+                                    while (n >= padding)
                                     {
                                         lines[n].fields[j].kingCanMove = false;
                                         if (lines[n].fields[j]._piece == null)
@@ -155,26 +154,38 @@ public class Board : MonoBehaviour
                             case 103:
                                 {
                                     if (i > 0 && j > 1)
-                                        lines[i - 1].fields[j - 2].kingCanMove = false;
+                                        lines[i-1].fields[j-2].kingCanMove = false;
                                     if (i > 0 && j < 6)
                                         lines[i - 1].fields[j + 2].kingCanMove = false;
                                     if (i > 1 && j > 0)
                                         lines[i - 2].fields[j - 1].kingCanMove = false;
+                                    else
+                                        lines[ArraySize - 2].fields[j - 1].kingCanMove = false;
                                     if (j < 7)
                                         if (i > 1)
                                             lines[i - 2].fields[j + 1].kingCanMove = false;
+                                        else
+                                            lines[ArraySize - 3].fields[j + 1].kingCanMove = false;
                                     if (j > 1)
                                         if (i < ArraySize - 2)
                                             lines[i + 1].fields[j - 2].kingCanMove = false;
+                                        else
+                                            lines[ArraySize - i].fields[j - 2].kingCanMove = false;
                                     if (j < 6)
-                                            if (i < ArraySize - 2)
-                                                lines[i + 1].fields[j + 2].kingCanMove = false;
+                                        if (i < ArraySize - 2)
+                                            lines[i + 1].fields[ j + 2].kingCanMove = false;
+                                        else
+                                            lines[ArraySize - i].fields[j + 2].kingCanMove = false;
                                     if (j > 0)
                                         if (i < ArraySize - 3)
                                             lines[i + 2].fields[j - 1].kingCanMove = false;
-                                    if (j < 7)
-                                        if (i < ArraySize - 3)
-                                            lines[i + 2].fields[j + 1].kingCanMove = false;
+                                        else
+                                            lines[ArraySize - i + 1].fields[j - 1].kingCanMove = false;
+                                    if(j < 7)
+                                    if (i < ArraySize-3)
+                                            lines[i + 2].fields[j+ 1].kingCanMove = false;
+                                    else
+                                            lines[ArraySize-i-1].fields[j + 1].kingCanMove = false;
                                 }
                                 break;
                             case 104:
@@ -194,7 +205,7 @@ public class Board : MonoBehaviour
                                     }
                                     n = i + 1;
                                     m = j - 1;
-                                    while (n < ArraySize - 1 && m >= 0)
+                                    while (n < ArraySize-1 && m >= 0)
                                     {
                                         lines[n].fields[m].kingCanMove = false;
                                         if (lines[n].fields[m]._piece == null)
@@ -207,7 +218,7 @@ public class Board : MonoBehaviour
                                     }
                                     n = i + 1;
                                     m = j + 1;
-                                    while (n < ArraySize - 1 && m <= 7)
+                                    while (n < ArraySize-1 && m <= 7)
                                     {
                                         lines[n].fields[m].kingCanMove = false;
                                         if (lines[n].fields[m]._piece == null)
