@@ -43,7 +43,7 @@ public class King : MonoBehaviour
             }
         }
         else
-            showText("шах! "+ _y + ", " + (x + X), 1, 0.15f, 0.15f);
+            showText("Шах!", 1, 0.15f, 0.15f);
     }
 
     public void showText(string text,float r, float g, float b)
